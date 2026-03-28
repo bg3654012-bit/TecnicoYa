@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TécnicoYa | Soluciones del hogar estilo Apple</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #0c0c0d;
+            --text: #1d1d1f;
+            --muted: #6e6e73;
+            --surface: #f5f5f7;
+            --surface2: #e5e5e7;
+            --blue: #0071e3;
+            --orange: #ff5a1f;
+            --radius: 16px;
+            --shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            background: var(--surface);
+            line-height: 1.5;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.82);
+            border-bottom: 1px solid #d6d6d7;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.92rem 1.5rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.67rem;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .brand .dot { color: var(--orange); }
+        .navlinks { display: flex; align-items: center; gap: 1.2rem; }
+        .navlinks a { color: var(--text); font-size: 0.95rem; font-weight: 600; padding: 0.05rem 0.15rem; }
+        .navlinks a:hover { color: var(--blue); }
+
+        .cta-primary {
+            color: var(--white);
+            background: var(--black);
+            border-radius: 999px;
+            border: none;
+            padding: 0.65rem 1.35rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .cta-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,.16); }
+
+        .hero {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw + 0.4rem, 4.1rem);
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.08;
+            color: var(--black);
+        }
+
+        .hero p {
+            margin: 1.1rem auto 2rem;
+            max-width: 700px;
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .hero-actions { display: flex; justify-content: center; align-items: center; gap: 0.95rem; flex-wrap: wrap; }
+
+        .hero-actions .button-outline {
+            border: 1px solid #aaaaab;
+            border-radius: 999px;
+            padding: 0.62rem 1.25rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            background: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease;
+        }
+
+        .hero-actions .button-outline:hover { background: #f0f0f3; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 1.1rem;
+            margin-top: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid #d1d1d6;
+            border-radius: 16px;
+            padding: 1.35rem;
+            box-shadow: var(--shadow);
+            transition: transform .2s ease, border-color .2s ease;
+            min-height: 180px;
+        }
+
+        .feature-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+        .feature-card h3 { margin: .65rem 0 .4rem; font-size: 1.25rem; letter-spacing: -0.01em; }
+        .feature-card p { margin: 0; color: #515155; }
+        .feature-card .btn { margin-top: 1rem; display: inline-block; color: var(--blue); font-weight: 700; }
+
+        .section {
+            padding: 4rem 1.5rem;
+        }
+
+        .section.dark {
+            background: #fff;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            margin: 0 auto 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #606066;
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.03rem;
+        }
+
+        .workflow {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            gap: 1rem;
+            max-width: 1000px;
+            margin-left: auto; margin-right: auto;
+        }
+
+        .step {
+            background: var(--white);
+            border: 1px solid #d7d7db;
+            border-radius: 16px;
+            padding: 1.2rem;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(35, 35, 35, 0.07);
+        }
+
+        .step h4 {
+            margin: .6rem 0 .4rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .step p { color: #65656b; font-size: .95rem; }
+
+        .cta-section {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+
+        .cta-section .cta-primary {
+            background: #000;
+            color: #fff;
+            padding: 0.8rem 1.65rem;
+            min-width: 220px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 1.25rem;
+            margin-top: 2rem;
+            max-width: 950px;
+            margin-left: auto; margin-right: auto;
+        }
+
+        .stat-block {
+            border-radius: 14px;
+            background: #ffffff;
+            border: 1px solid #d7d7d9;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+        }
+
+        .stat-block strong {
+            display: block;
+            font-size: 1.9rem;
+            color: #111;
+            margin-bottom: .3rem;
+            font-weight: 700;
+        }
+
+        .stat-block span { color: #6b6b70; }
+
+        .contact-form {
+            margin-top: 1.8rem;
+            background: #f8f8fa;
+            border: 1px solid #d8d8db;
+            border-radius: 20px;
+            max-width: 700px;
+            padding: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 12px 28px rgba(0,0,0,.06);
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; color: #3a3a3f; margin-bottom: .4rem; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            border: 1px solid #c8c8cb;
+            border-radius: 12px;
+            padding: 0.72rem 0.85rem;
+            font-size: 0.95rem;
+            color: #1f1f24;
+            background: #fff;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: 3px solid rgba(0, 113, 227, .12);
+            border-color: #0071e3;
+        }
+
+        .form-note { margin-top: .9rem; color: #78787e; font-size: 0.92rem; text-align: center; }
+
+        footer {
+            background: #111;
+            color: #f1f1f3;
+            padding: 2.5rem 1.5rem 1.5rem;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap: 1.25rem;
+        }
+
+        .footer-title { font-weight: 800; font-size: 1.1rem; margin-bottom: .75rem; }
+        .footer a { color: #d7d7da; }
+        .footer a:hover { color: #fff; }
+
+        .badge { font-size: 0.82rem; color:#fff; background: #0071e3; border-radius: 999px; padding: 0.15rem 0.65rem; margin-left: .5rem; }
+
+        /* ANIMATIONS */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .navbar { animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        
+        .hero { animation: fadeIn 0.8s ease-out; }
+        
+        .feature-card { animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .section { animation: fadeIn 0.8s ease-out; }
+
+        .cta-primary {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .cta-primary:active::before { left: 100%; }
+        .cta-primary:active { transform: scale(0.98); }
+
+        .button-outline {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-outline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.05);
+            transition: left 0.3s ease;
+        }
+
+        .button-outline:active::before { left: 100%; }
+        .button-outline:active { transform: scale(0.98); }
+
+        .navlinks a {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navlinks a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--blue);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navlinks a:hover::after { width: 100%; }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 113, 227, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .feature-card:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .step {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(35, 35, 35, 0.15);
+            border-color: var(--blue);
+        }
+
+        .stat-block {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .stat-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-block strong {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .section {
+            opacity: 0;
+        }
+
+        .section.visible {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @media (max-width: 900px) {
+            .hero { padding: 3.5rem 1rem 2.8rem; }
+            .navbar { padding: 0.6rem 1rem; }
+            .navlinks { gap: 0.8rem; }
+        }
+
+        @media (max-width: 640px) {
+            .navbar { flex-wrap: wrap; justify-content: center; gap: .6rem; }
+            .hero-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="brand"><span class="dot">⚡</span> TécnicoYa</div>
+        <nav class="navlinks">
+            <a href="solicitar-servicio.html">Servicios</a>
+            <a href="#como-funciona">Cómo funciona</a>
+            <a href="registro-tecnico.html">Para técnicos</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+        <button class="cta-primary" onclick="window.location.href='solicitar-servicio.html'">WhatsApp</button>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Técnicos certificados a la velocidad de un clic</h1>
+            <p>La primera plataforma dominicana al estilo inDrive para tu hogar: plomería, electricidad, A/C, pintura, ebanistería y más — con garantía y calificación transparente.</p>
+            <div class="hero-actions">
+                <button class="cta-primary" onclick="window.location.href='solicitar-servicio.html'">Solicitar servicio</button>
+                <button class="button-outline" onclick="window.location.href='registro-tecnico.html'">Unete como técnico</button>
+            </div>
+
+            <div class="feature-grid" style="margin-top:2rem;">
+                <div class="feature-card">
+                    <h3>Busqueda instantánea</h3>
+                    <p>Servicio inmediato con técnicos locales pre-verificados.</p>
+                    <a class="btn" href="solicitar-servicio.html">Ver plomería</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Pago transparente</h3>
+                    <p>Precio claro, sin sorpresas. Tú eliges la cotización final.</p>
+                    <a class="btn" href="solicitar-servicio.html">Ver electricidad</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Soporte 24/7</h3>
+                    <p>Atención continua por WhatsApp, teléfono y chat en vivo.</p>
+                    <a class="btn" href="solicitar-servicio.html">Ver A/C</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark" id="como-funciona">
+            <h2 class="section-title">¿Cómo funciona?</h2>
+            <p class="section-subtitle">3 pasos fáciles con seguimiento completo</p>
+            <div class="workflow">
+                <article class="step">
+                    <h4>1. Describe tu problema</h4>
+                    <p>Escoge el servicio, tu zona y la hora que prefieres.</p>
+                </article>
+                <article class="step">
+                    <h4>2. Conecta con técnicos</h4>
+                    <p>Recibe ofertas de técnicos disponibles en tu área.</p>
+                </article>
+                <article class="step">
+                    <h4>3. Trabajo hecho</h4>
+                    <p>Paga al finalizar y califica para mantener calidad.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Estadísticas en RD</h2>
+            <div class="stats-grid">
+                <div class="stat-block"><strong>150+</strong><span>Técnicos activos</span></div>
+                <div class="stat-block"><strong>500+</strong><span>Servicios completados</span></div>
+                <div class="stat-block"><strong>4.9</strong><span>Calificación promedio</span></div>
+                <div class="stat-block"><strong>8</strong><span>Ciudades servidas</span></div>
+            </div>
+        </section>
+
+        <section class="section dark">
+            <h2 class="section-title">Solicita desde WhatsApp</h2>
+            <p class="section-subtitle">Pulsa el botón y abre tu conversación con Dineurys Díaz, fundador. Atención directa de 8am a 10pm.</p>
+            <div class="cta-section">
+                <button class="cta-primary" onclick="window.location.href='https://wa.me/18292100601?text=Hola%20Dineurys,%20quiero%20un%20t%C3%A9cnico'">Contactar por WhatsApp</button>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Empieza con tu solicitud</h2>
+            <div class="contact-form">
+                <form onsubmit="alert('Solicitud enviada. Te contactamos por WhatsApp.');return false;">
+                    <div class="form-group"><label for="nombre">Nombre completo</label><input id="nombre" type="text" placeholder="Tu nombre" required></div>
+                    <div class="form-group"><label for="telefono">Teléfono/WhatsApp</label><input id="telefono" type="tel" placeholder="+1 (809) 000-0000" required></div>
+                    <div class="form-group"><label for="servicio">Servicio</label><select id="servicio" required><option value="">Selecciona</option><option value="plomeria">Plomería</option><option value="electricidad">Electricidad</option><option value="ebanisteria">Ebanistería</option><option value="aire">Aire Acondicionado</option><option value="pintura">Pintura</option><option value="albanileria">Albañilería</option><option value="cerrajeria">Cerrajería</option><option value="fumigacion">Fumigación</option></select></div>
+                    <div class="form-group"><label for="descripcion">Describe el trabajo</label><textarea id="descripcion" rows="4" placeholder="Detalles del problema" required></textarea></div>
+                    <div class="form-group"><label for="zona">Zona / Sector</label><input id="zona" type="text" placeholder="Santo Domingo, Santiago, etc." required></div>
+                    <button class="cta-primary" type="submit">Enviar solicitud</button>
+                    <p class="form-note">Nos comunicamos en menos de 15 minutos al WhatsApp que escribas aquí.</p>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <h3 class="footer-title">TécnicoYa</h3>
+                <p>Fundado por Dineurys Díaz. Servicio 100% RD, con revisión de trayectorias y calificación ciudadana.</p>
+            </div>
+            <div>
+                <h3 class="footer-title">Enlaces</h3>
+                <p><a href="solicitar-servicio.html">Todos los servicios</a></p>
+                <p><a href="#">Preguntas frecuentes</a></p>
+            </div>
+            <div>
+                <h3 class="footer-title">Contacto</h3>
+                <p><a href="tel:+18292100601">+1 (829) 210-0601</a></p>
+                <p><a href="https://wa.me/18292100601">WhatsApp directo</a></p>
+                <p>Santo Domingo, República Dominicana</p>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:1rem; color:#b9b9bc;">TécnicoYa © 2025 — República Dominicana</p>
+    </footer>
+
+    <script>
+        // Smooth scroll animations on intersection
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Button ripple effect
+            document.querySelectorAll('.cta-primary, .button-outline').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.width = '0';
+                    ripple.style.height = '0';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                    ripple.style.pointerEvents = 'none';
+                    ripple.style.animation = 'rippleEffect 0.6s ease-out';
+                    
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Navbar link click smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add ripple animation keyframe dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>
