@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Técnicos - TécnicoYa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #0c0c0d;
+            --text: #1d1d1f;
+            --muted: #6e6e73;
+            --surface: #f5f5f7;
+            --blue: #0071e3;
+            --orange: #ff5a1f;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; color: var(--text); background: var(--surface); line-height: 1.5; }
+        .navbar { position: sticky; top: 0; z-index: 99; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.82); border-bottom: 1px solid #d6d6d7; display: flex; align-items: center; justify-content: space-between; padding: 0.92rem 1.5rem; }
+        .brand { display: flex; align-items: center; gap: 0.67rem; font-weight: 800; font-size: 1.4rem; cursor: pointer; }
+        .brand .dot { color: var(--orange); }
+        .container { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }
+        .page-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-subtitle { color: var(--muted); font-size: 1.08rem; margin-bottom: 2rem; }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+        .benefit-card { background: white; border: 1px solid #d1d1d6; border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 8px 18px rgba(35, 35, 35, 0.07); }
+        .benefit-card h3 { margin: 0.75rem 0 0.5rem; font-size: 1.1rem; }
+        .benefit-card p { margin: 0; color: #6b6b70; font-size: 0.9rem; }
+        .benefit-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .registration-form { background: white; border: 1px solid #d1d1d6; border-radius: 20px; padding: 2rem; box-shadow: 0 12px 28px rgba(0,0,0,.06); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #3a3a3f; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid #c8c8cb; border-radius: 12px; padding: 0.8rem; font-size: 0.95rem; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: 3px solid rgba(0, 113, 227, .12); border-color: var(--blue); }
+        .cta-button { background: black; color: white; border: none; border-radius: 999px; padding: 0.8rem 2rem; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all .2s ease; width: 100%; }
+        .cta-button:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,.16); }
+        footer { background: #111; color: #f1f1f3; text-align: center; padding: 2rem 1.5rem; margin-top: 3rem; }
+        a { text-decoration: none; color: inherit; }
+        .back-link { background: transparent; border: 1px solid #aaaaab; color: var(--text); padding: 0.6rem 1.2rem; border-radius: 999px; cursor: pointer; font-weight: 700; transition: all .2s; display: inline-block; margin-bottom: 1.5rem; }
+        .back-link:hover { background: #f0f0f3; }
+
+        /* ANIMATIONS */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .navbar { animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .container { animation: fadeIn 0.8s ease-out; }
+        .benefit-card { animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        
+        .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+        .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+        .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+        .benefit-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:active::before { left: 100%; }
+        .cta-button:active { transform: scale(0.98); }
+
+        .back-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.05);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .back-link:active::before {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="brand" onclick="window.location.href='tecnicoYa.html'"><span class="dot">⚡</span> TécnicoYa</div>
+    </header>
+
+    <div class="container">
+        <button class="back-link" onclick="window.location.href='tecnicoYa.html'">← Volver atrás</button>
+        <h1 class="page-title">Únete como técnico</h1>
+        <p class="page-subtitle">Genera ingresos con tu experiencia. Solo 10% de comisión por cada cliente que te conectamos.</p>
+
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">📈</div>
+                <h3>Más clientes</h3>
+                <p>Sin gastar en publicidad. Nosotros te los traemos.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <h3>Pagos seguros</h3>
+                <p>Dinero directo a tu cuenta. Sin retrasos.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">🆓</div>
+                <h3>Sin costo inicial</h3>
+                <p>Cero inversión. Solo trae tu experiencia.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📊</div>
+                <h3>Tú pones precio</h3>
+                <p>Decide tus tarifas y disponibilidad.</p>
+            </div>
+        </div>
+
+        <div class="registration-form">
+            <h2 style="margin-top: 0;">Formulario de registro</h2>
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo *</label>
+                    <input id="nombre" type="text" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp *</label>
+                    <input id="telefono" type="tel" placeholder="+1 (809) 000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label for="especialidad">Especialidad *</label>
+                    <select id="especialidad" required>
+                        <option value="">Selecciona tu especialidad</option>
+                        <option value="plomeria">Plomería</option>
+                        <option value="electricidad">Electricidad</option>
+                        <option value="aire">Aire Acondicionado</option>
+                        <option value="pintura">Pintura</option>
+                        <option value="ebanisteria">Ebanistería</option>
+                        <option value="albanileria">Albañilería</option>
+                        <option value="cerrajeria">Cerrajería</option>
+                        <option value="fumigacion">Fumigación</option>
+                        <option value="multiples">Múltiples servicios</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="experiencia">Años de experiencia *</label>
+                    <input id="experiencia" type="number" min="0" placeholder="Ej: 5" required>
+                </div>
+                <div class="form-group">
+                    <label for="zona">Zona que cubres *</label>
+                    <input id="zona" type="text" placeholder="Ej: Santo Domingo, Santiago" required>
+                </div>
+                <div class="form-group">
+                    <label for="tarifas">Tarifa por hora (RD$) *</label>
+                    <input id="tarifas" type="number" min="0" placeholder="Ej: 1500" required>
+                </div>
+                <div class="form-group">
+                    <label for="referencias">Referencias / Portfolio</label>
+                    <textarea id="referencias" rows="3" placeholder="Links o referencias de trabajos previos (opcional)"></textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="acepto" required>
+                    <label for="acepto" style="margin: 0;">Acepto los términos y condiciones de TécnicoYa</label>
+                </div>
+                <button type="submit" class="cta-button">Registrarme como técnico</button>
+                <p style="text-align: center; color: #6b6b70; margin-top: 1rem; font-size: 0.9rem;">Te contactaremos por WhatsApp para confirmar tu registro.</p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>TécnicoYa © 2025 | República Dominicana | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const especialidad = document.getElementById('especialidad').value;
+            const experiencia = document.getElementById('experiencia').value;
+            const zona = document.getElementById('zona').value;
+            const tarifas = document.getElementById('tarifas').value;
+            const referencias = document.getElementById('referencias').value;
+
+            const message = `Hola Dineurys,\n\nQuiero registrarme como técnico en TécnicoYa:\n\nNombre: ${nombre}\nTeléfono: ${telefono}\nEspecialidad: ${especialidad}\nExperiencia: ${experiencia} años\nZona: ${zona}\nTarifa: RD$ ${tarifas}/hora\nReferencias: ${referencias || 'Sin especificar'}`;
+            window.location.href = `https://wa.me/18292100601?text=${encodeURIComponent(message)}`;
+        }
+
+        // Button ripple effect
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.cta-button, .back-link').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.width = '0';
+                    ripple.style.height = '0';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                    ripple.style.pointerEvents = 'none';
+                    ripple.style.animation = 'rippleEffect 0.6s ease-out';
+                    
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
+
+        // Add ripple animation keyframe dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
